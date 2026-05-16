@@ -1,9 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import OpenAI from 'openai'
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+import { generateJsonText } from '@/lib/azureResponses'
 
 export async function POST(req: NextRequest) {
   try {
@@ -22,20 +18,10 @@ Return a JSON object with key "content" containing:
 
 Respond with ONLY valid JSON.`
 
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4o',
-      messages: [
-        {
-          role: 'system',
-          content: 'You are a creative director specializing in digital advertising. Return only valid JSON.',
-        },
-        { role: 'user', content: userPrompt },
-      ],
-      temperature: 0.8,
-      response_format: { type: 'json_object' },
-    })
-
-    const raw = completion.choices[0]?.message?.content || '{}'
+    const raw = await generateJsonText(
+      'You are a creative director specializing in digital advertising. Return only valid JSON.',
+      userPrompt
+    )
     let parsed
 
     try {

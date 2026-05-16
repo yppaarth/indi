@@ -1,9 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import OpenAI from 'openai'
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+import { generateJsonText } from '@/lib/azureResponses'
 
 export async function POST(req: NextRequest) {
   try {
@@ -25,20 +21,7 @@ Each item must have:
 Include exactly one of each type (5 total items).
 Respond with ONLY valid JSON, no markdown or explanation.`
 
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4o',
-      messages: [
-        {
-          role: 'system',
-          content: 'You are an expert marketing copywriter. Return only valid JSON.',
-        },
-        { role: 'user', content: userPrompt },
-      ],
-      temperature: 0.85,
-      response_format: { type: 'json_object' },
-    })
-
-    const raw = completion.choices[0]?.message?.content || '{}'
+    const raw = await generateJsonText('You are an expert marketing copywriter. Return only valid JSON.', userPrompt)
     let parsed
 
     try {

@@ -17,7 +17,7 @@ An AI-powered creative campaign studio built with Next.js 14, TypeScript, and Op
 
 - **Frontend**: Next.js 14 (App Router), TypeScript, Tailwind CSS, Framer Motion
 - **State**: Zustand
-- **AI**: OpenAI GPT-4o + DALL-E 3
+- **AI**: Azure OpenAI Responses (`gpt-5-mini6`) + DALL-E 3
 - **Image Editor**: Fabric.js
 - **Storage**: localStorage + IndexedDB
 - **UI**: shadcn/ui + Lucide React
@@ -39,13 +39,18 @@ npm install
 cp .env.example .env.local
 ```
 
-Edit `.env.local` and add your OpenAI API key:
+Edit `.env.local` and add your Azure OpenAI Responses configuration:
 
 ```
-OPENAI_API_KEY=sk-your-api-key-here
+AZURE_OPENAI_RESPONSES_ENDPOINT=https://your-resource.openai.azure.com/openai/responses?api-version=2025-04-01-preview
+AZURE_OPENAI_DEPLOYMENT=gpt-5-mini6
+AZURE_OPENAI_API_KEY=your-azure-openai-api-key
+
+# Required only for image generation.
+OPENAI_API_KEY=sk-your-openai-api-key
 ```
 
-Get your key at: https://platform.openai.com/api-keys
+Text generation uses Azure OpenAI Responses. The image generation route still uses the OpenAI image API.
 
 ### 3. Run Locally
 
