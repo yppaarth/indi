@@ -1,0 +1,7 @@
+# This is a Next.js project - no Python backend required.
+# All dependencies are managed via npm (package.json).
+#
+# Node.js >= 18.17.0 required
+# npm >= 9.0.0 required
+#
+# Run: npm install && npm run dev
